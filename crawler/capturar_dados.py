@@ -1,4 +1,5 @@
 from base64 import b64encode
+from logging import getLogger
 from os import remove, makedirs
 from os.path import join, exists
 from re import search
@@ -6,6 +7,8 @@ from re import search
 from decouple import config
 from requests import get, post
 from bs4 import BeautifulSoup
+
+logger = getLogger(__name__)
 
 
 class CapturarDados:
@@ -33,7 +36,7 @@ class CapturarDados:
         try:
             self._token = search(pattern=r'(?<=csrf\"\svalue=\")(.*?)(?=")', string=conteudo_html).group()
         except AttributeError:
-            print("Não conseguiu capturar o token do site!")
+            logger.error("Não conseguiu capturar o token do site!")
             self._token = None
 
     def _consultar_codigo(self, codigo: int):
@@ -48,7 +51,7 @@ class CapturarDados:
         if response.status_code == 200:
             return response.text
         else:
-            print(f"Código {codigo} inexistente!")
+            logger.info(f"Código {codigo} inexistente!")
             return None
 
     def _parser_dados(self, codigo: int, html_page: str):
@@ -114,14 +117,14 @@ class CapturarDados:
             return base64_content
 
         except Exception as e:
-            print(f"Erro ao gerar base64 do arquivo {nome} | Erro: {e}")
+            logger.error(f"Erro ao gerar base64 do arquivo {nome} | Erro: {e}")
             return None
 
         finally:
             try:
                 remove(caminho_completo_arquivo)
             except Exception as e:
-                print(f"Erro ao remover arquivo temporário {caminho_completo_arquivo}: | Erro: {e}")
+                logger.warning(f"Erro ao remover arquivo temporário {caminho_completo_arquivo}: | Erro: {e}")
 
     def capturar_dados_existentes(self, codigo: int):
         """
