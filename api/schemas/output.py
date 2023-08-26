@@ -16,7 +16,7 @@ class DefaultResponses:
     """Classe base para respostas HTTP padrão."""
 
     # Exemplo de processo para resposta
-    processo_exemplo = [
+    dados_capturados_exemplo = [
         {
             "nome_particao_arquivo": "Arquivo 1",
             "anexos": [
@@ -54,7 +54,8 @@ class DefaultResponses:
 
     @classmethod
     def _status_200(cls):
-        """Resposta para o código de status 200 (OK) para a consulta de status de solicitação."""
+        """Resposta para o código de status 200 (OK) para caso bem sucedido de captura de informações do(s)
+        arquivo(s)."""
         return {
             200: {
                 "model": ConsultaCodigoOutput,
@@ -64,7 +65,7 @@ class DefaultResponses:
                         "examples": {
                             "example2": {
                                 "summary": "Dados capturados",
-                                "value": cls.processo_exemplo
+                                "value": cls.dados_capturados_exemplo
                             }
                         }
                     }
@@ -74,7 +75,7 @@ class DefaultResponses:
 
     @classmethod
     def _status_404(cls):
-        """Resposta para o código de status 404 (Not Found) para a consulta de status de solicitação."""
+        """Resposta para o código de status 404 (Not Found) para a quando solicitado um código não encontrado."""
         return {
             404: {
                 "model": BaseError,
