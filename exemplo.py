@@ -8,7 +8,7 @@ def execucao_modelo():
     dados_parseados = {}
     lista_codigos_consulta = [1203, 98465, 321465]  # um código inexistente e outros 2 informados para realizar no teste
     capturar_dados = CapturarDados()
-    with ThreadPoolExecutor(2) as executor:
+    with ThreadPoolExecutor(3) as executor:
         futures = [
             executor.submit(capturar_dados.capturar_dados_existentes, codigo)
             for codigo in lista_codigos_consulta
@@ -21,6 +21,8 @@ def execucao_modelo():
             codigo_capturado = dados[0].get('codigo_consultado')
             dados_parseados[codigo_capturado] = dados
 
+    return dados_parseados
+
 
 if __name__ == '__main__':
-    execucao_modelo()
+    print(execucao_modelo())
