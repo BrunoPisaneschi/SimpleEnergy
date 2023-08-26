@@ -1,0 +1,6 @@
+-r requirements.txt
+
+httpx==0.24.1
+robotframework==6.1.1
+robotframework-requests==0.9.5
+coverage==7.3.0
