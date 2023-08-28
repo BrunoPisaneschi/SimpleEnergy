@@ -44,7 +44,7 @@ O mesmo arquivo também pode ser executado manualmente, caso deseje.
 
 Para executar a API, já foi configurado no `invoke` o comando abaixo:
 ```shell
-inv docker-start
+inv start-docker
 ```
 
 Ele se encarregará de subir todo o projeto no docker e deixar a API disponível para uso.
